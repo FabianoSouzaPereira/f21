@@ -15,22 +15,7 @@ public class FuncionarioDao {
 	public FuncionarioDao() {
 		this.setConnection(new ConnectionFactory().getConnection());
 	}
-
-	public void adiciona(Funcionario funcionario) {
-		String sql = "Insert into funcionario (nome,usuario,senha) values(?,?,?);";
-
-		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1, funcionario.getNome());
-			stmt.setString(2, funcionario.getUsuario());
-			stmt.setString(3, funcionario.getSenha());
-			stmt.execute();
-			stmt.close();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-
-	}
+	
 
 	public List<Funcionario> getLista() {
 
@@ -58,6 +43,56 @@ public class FuncionarioDao {
 		}
 
 	}
+	
+	
+	public void adiciona(Funcionario funcionario) {
+		String sql = "Insert into funcionario (nome,usuario,senha) values(?,?,?);";
+
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, funcionario.getNome());
+			stmt.setString(2, funcionario.getUsuario());
+			stmt.setString(3, funcionario.getSenha());
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
+
+		
+	public void altera(Funcionario funcionario) {
+		String sql= "Update funcionario set nome=?, set Usuario=?, set senha=? where id=?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, funcionario.getNome());
+			stmt.setString(2, funcionario.getUsuario());
+			stmt.setString(3, funcionario.getSenha());
+			stmt.executeQuery();
+			stmt.close();
+			
+		} catch (SQLException e) {
+			throw new	RuntimeException(e);
+		}
+	}
+	
+	public void apaga(Funcionario funcionario) {
+		String sql = "Delete from funcionario where id = ?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setLong(1, funcionario.getId());
+			stmt.execute();
+			stmt.close();
+			
+		} catch (SQLException e) {
+			throw new	RuntimeException(e);
+		}
+	}
+	
+	
+	
 
 	/**
 	 * @return the connection
